@@ -12,7 +12,7 @@ const args = process.argv.slice(2);
 
 let cli = {
     localhost: 'localhost',
-    port: 8081
+    port: process.env.PORT || 8081
 };
 
 args.forEach((val) => {
