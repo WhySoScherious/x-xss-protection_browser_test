@@ -8,22 +8,7 @@ const errorhandler = require('errorhandler');
 const hbs = require('hbs');
 const server = express();
 
-const args = process.argv.slice(2);
-
-let cli = {
-    localhost: 'localhost',
-    port: process.env.PORT || 8081
-};
-
-args.forEach((val) => {
-    if (val.indexOf('--localhost=') !== -1) {
-        cli.localhost = val.replace('--localhost=', '');
-    }
-
-    if (val.indexOf('--port=') !== -1) {
-        cli.port = parseInt(val.replace('--port=', ''), 10);
-    }
-});
+const port = process.env.PORT || 8081;
 
 /* Setttings */
 server.set('views', __dirname + '/public/views');
@@ -89,11 +74,6 @@ server.get('/public', (req, res) => {
     res.render('main', {
         title: 'XSS Filter Test',
         includeBootStrapCss: true,
-        localhost: cli.localhost,
-        port: cli.port,
-        pageConfig: () => {
-            return new hbs.handlebars.SafeString(JSON.stringify(cli));
-        },
         partial: () => {
             return 'main';
         }
@@ -144,7 +124,7 @@ server.post('/setXSS', (req, res) => {
     }
 });
 
-const listener = server.listen(cli.port, (err) => {
+const listener = server.listen(port, (err) => {
     if (err) {
         throw err;
     }

@@ -2,19 +2,6 @@ $(document).ready(function() {
     var $elXssOptions = $('.xss-header-options');
     var $elHttpMethodOptions = $('.http-method-options');
     var initialMethod = $('#xss-input-form').attr('method');
-    var baseUrl = 'http://localhost:8081';
-    var localConfig = { localhost: 'localhost', port: 8081 };
-    var pageConfig = {};
-
-    try {
-        pageConfig = JSON.parse(document.getElementById('pageobjjson').innerHTML);
-    } catch (e) {}
-
-    if (pageConfig && Object.keys(pageConfig).length && pageConfig.hasOwnProperty('localhost') && pageConfig.hasOwnProperty('port')) {
-        localConfig = pageConfig;
-
-        baseUrl = 'http://' + localConfig.localhost + ':' + localConfig.port;
-    }
 
     var propXss = function (data) {
         if (data && data['X-XSS-Protection']) {
@@ -38,7 +25,7 @@ $(document).ready(function() {
     };
 
     $.ajax({
-        url: baseUrl + '/back',
+        url: '/back',
         dataType: 'json',
         cache: false,
         type: 'GET'
@@ -56,7 +43,7 @@ $(document).ready(function() {
         var selected = $(this).prop('checked', true).val();
 
         $.ajax({
-            url: baseUrl + '/setXSS',
+            url: '/setXSS',
             dataType: 'json',
             type: 'POST',
             data: {
