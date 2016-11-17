@@ -39,7 +39,7 @@ server.use((req, res, next) => {
     return next();
 });
 
-server.use(express.static(path.join(__dirname, '/')));
+server.use(express.static(path.join(__dirname, 'public')));
 server.use(errorhandler({ dumpExceptions: true, showStack: true }));
 server.disable('x-powered-by');
 
@@ -69,7 +69,7 @@ server.options('/', (req, res) => {
     res.send('options');
 });
 
-server.get('/public', (req, res) => {
+server.get('/', (req, res) => {
     res.status(200);
     res.render('main', {
         title: 'XSS Filter Test',
